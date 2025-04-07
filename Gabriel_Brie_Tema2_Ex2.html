@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversie Alfabetică Unică</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: #ffffff;
+            flex-direction: column;
+            color: #333;
+        }
+        .container {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 80%;
+            max-width: 400px;
+            border: 1px solid #ddd;
+        }
+        input {
+            margin: 10px;
+            padding: 12px;
+            font-size: 18px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            outline: none;
+            width: 90%;
+            background: #ffffff;
+            color: #333;
+        }
+        button {
+            padding: 12px 20px;
+            font-size: 18px;
+            border: none;
+            border-radius: 8px;
+            background: #007bff;
+            color: white;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .output {
+            font-weight: bold;
+            margin-top: 15px;
+            font-size: 20px;
+            word-break: break-word;
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Transformare Unică de Text</h2>
+        <input type="text" id="inputText" placeholder="Introdu textul aici...">
+        <button onclick="convertText()">Converteste</button>
+        <p class="output" id="outputText"></p>
+    </div>
+    
+    <script>
+        function convertText() {
+            const input = document.getElementById('inputText').value;
+            const alpha = 'abcdefghijklmnopqrstuvwxyz';
+            const reversedAlpha = [...alpha].reverse().join('');
+            
+            let output = '';
+            for (let ch of input) {
+                let isUpper = ch === ch.toUpperCase();
+                let idx = alpha.indexOf(ch.toLowerCase());
+                
+                if (idx !== -1) {
+                    let newChar = reversedAlpha[idx];
+                    output += isUpper ? newChar.toUpperCase() : newChar;
+                } else {
+                    output += ch;
+                }
+            }
+            
+            document.getElementById('outputText').textContent = output;
+        }
+    </script>
+</body>
+</html>
