@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="ro">
 <head>
+	<link rel="icon" type="favicon.ico" href="favicon.ico">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fibonacci în Interval</title>
@@ -62,7 +63,20 @@
             background-color: #eef;
             display: none; 
             width: 90%;
+			transition: opacity 0.3s ease-in-out;
         }
+		@keyframes shake {
+		  0% { transform: translateX(0); }
+		  25% { transform: translateX(-5px); }
+		  50% { transform: translateX(5px); }
+		  75% { transform: translateX(-5px); }
+		  100% { transform: translateX(0); }
+		}
+
+		.shake {
+		  animation: shake 0.3s;
+		}
+
     </style>
 </head>
 <body>
@@ -81,6 +95,9 @@
         
         <button onclick="calcFibonacci()">Generează</button>
         <p id="output"></p>
+		
+		<button onclick="resetForm()" style="background-color:#dc3545; margin-top:5px;">Reset</button>
+
     </div>
 
     <script type="text/javascript">
@@ -89,14 +106,23 @@
             let maxVal = parseInt(document.getElementById("numMax").value);
             let output = document.getElementById("output");
 
-            output.style.display = "block"; // Afișează output-ul la apăsare
+            output.style.display = "block"; 
+			output.style.opacity = "0"; 
+			
+			setTimeout(() => {
+				output.style.opacity = "1";
+			}, 100);
 
             if (isNaN(minVal) || isNaN(maxVal)) {
                 output.innerHTML = "⚠️ Introduceți numere valide!";
+				output.classList.add("shake");
+				setTimeout(() => output.classList.remove("shake"), 300);
                 return;
             }
             if (minVal === maxVal) {
                 output.innerHTML = "⚠️ Intervalul nu poate avea aceeași valoare!";
+				output.classList.add("shake");
+				setTimeout(() => output.classList.remove("shake"), 300);
                 return;
             }
             if (minVal > maxVal) { 
@@ -115,10 +141,23 @@
                 f2 = fNext; 
             }
 
-            output.innerHTML = fibNumbers.length 
-                ? "🔢 Numere Fibonacci: " + fibNumbers.join(", ") 
-                : "⚠️ Niciun număr Fibonacci în acest interval.";
+            if (fibNumbers.length) {
+				output.innerHTML = `🔢 Am găsit ${fibNumbers.length} numere Fibonacci: ${fibNumbers.join(", ")}`;
+			} else {
+				output.innerHTML = "⚠️ Niciun număr Fibonacci în acest interval.";
+				output.classList.add("shake");
+				setTimeout(() => output.classList.remove("shake"), 300);
+			}
         }
+		
+		function resetForm() {
+			document.getElementById("numMin").value = "";
+			document.getElementById("numMax").value = "";
+			const output = document.getElementById("output");
+			output.style.display = "none";
+			output.innerHTML = "";
+		}
+
     </script>
 </body>
 </html>
